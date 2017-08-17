@@ -7,7 +7,7 @@ triangulate.py - the addon
 triangulate.zip - contains two short video files and a blend file showing the naming schemes described below
 
 
-Introduction
+## Introduction
 
 Optical MoCap systems use two or more calibrated cameras to track markers on a mocap actor or prop. The tracking data, and the known location of the cameras allows software to determine the 3D location of each marker by triangulation.
 
@@ -18,10 +18,10 @@ The 'triangulate' addon will combine the movieclip tracking data with the 3d cam
 The Empties can then be used by the 3d artist to drive an armature, or any other purpose. The built-in 'Motion Capture' addon can also be used to retarget the captured actions to a target armature or rig.
 
 
-Installation
+## Installation
 The 'triangulate addon is installed using the standard blender method. From the Addon tab on User Preferences dialog, choose 'Install from file'. Navigate to the 'Triangulate.py' file, and select it. You can then enable the addon via the check box.
 
-Pre-work
+## Pre-work
 The 'triangulate' addon is just one small part of a larger workflow. This section lists some of the other tasks required to do motion capture. There may be many ways to achieve the same outcome.
 
 - Choose two or more cameras to film the mocap actor. They should be able to film at the same framerate, but can be different in most other ways. 
@@ -35,7 +35,7 @@ The 'triangulate' addon is just one small part of a larger workflow. This sectio
 Note that we are just doing 2D tracking for the 'Triangulate' addon, no camera solve is required (unless you use this for camera calibration - see the later section)
 - For each track name created in the two or more Movieclips, create an Empty in the 3D viewport with the same name. For example, if you called the actor's left knee "Knee.L" in movieclips "Camera1" and "Camera2", then you need to create an empty called "Knee.L". This tells the 'triangulate' addon to look for tracks called "Knee.L" in every Movieclip in the project, and if it finds this track in at least to Movieclips, it will add location keyframes to the empty.
 
-Running the Addon
+## Running the Addon
 Finally, the hard work is done! Set the start and end frames to the range that you want the empties animated.
 
 Go to the 3D view, and press the 'Triangulate' button on the "Misc" toolshelf tab, (or in the Object Menu). For every empty in the scene, and for every the frame from 'start' to 'end', the addon will look for tracks with matching names in each Movieclip. If it finds tracks with valid tracking information in at least two Movieclips, it will perform a triagulation calculation to determine the 3D location of the tracked marker, and will add a location keyframe to the empty. This should happen very quickly.
@@ -48,7 +48,7 @@ If the camera calibration is perfect, the rays that are projected through the tr
 
 For each empty, a custom parameter called 'Error" is added, and a keyframe is added for every frame showing the error for that frame. You can use the graph function to trend this error for each empty, and perhaps manually delete bad keyframes.
 
-Using the Empties
+## Using the Empties
 Moving empties aren't that useful in themselves, but the idea is that you should create an armature which matches the dimensions of the mocap actor, and give the joints constraints to limit motion to feasible movements. One empty (for example the "hip" empty), or perhaps a group of three empties can determine the base location of the root or 'hip' bone using a location constraint, and the other empties can be used to target rotations is the other bones.
 
 If the bone constraints are converted to keyframes, the it should be possible to use the built in "Motion Capture" addon to clean up and retarget the motion data to the final rig.
@@ -56,7 +56,7 @@ If the bone constraints are converted to keyframes, the it should be possible to
 Or you can do whatever you like with them!!
 
 
-Camera Calibration
+## Camera Calibration
 
 Accurate camera calibration is the biggest issue in this Mocap method. It's up to you how to do this for your application, but here are two suggestions...
 
@@ -70,8 +70,10 @@ I repeated this for the other Movieclip. It's obviously important to use the sam
 
 This method worked but only seems accurate when the mocap actor was in the same region as the calibration object. A lot depends on the quality of the tracking and the movement of the object. It was also a fair bit of work for each camera, and would have to be repeated each time the cameras were moved.
 
+** Edit - this method is crap **
+
 Method 2
-I haven't tried this yet, but I think it will be better.
+** Edit - this method is pretty good **
 
 I plan to model the physical characteristics of the Mocap set to scale in 3D. I will then measure the actual position of the cameras in the set. I will also check that the camera's tripods are level.
 
