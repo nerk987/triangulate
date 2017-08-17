@@ -1,4 +1,8 @@
-Blender Triangulate Addon
+#Blender Triangulate Addon
+
+Files:
+triangulate.py - the addon
+triangulate.zip - contains two short video files and a blend file showing the naming schemes described below
 
 Introduction
 Optical MoCap systems use two or more calibrated cameras to track markers on a mocap actor or prop. The tracking data, and the known location of the cameras allows software to determine the 3D location of each marker by triangulation.
