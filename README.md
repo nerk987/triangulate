@@ -1,10 +1,14 @@
-#Blender Triangulate Addon
+# Blender Triangulate Addon
 
 Files:
 triangulate.py - the addon
+
+
 triangulate.zip - contains two short video files and a blend file showing the naming schemes described below
 
+
 Introduction
+
 Optical MoCap systems use two or more calibrated cameras to track markers on a mocap actor or prop. The tracking data, and the known location of the cameras allows software to determine the 3D location of each marker by triangulation.
 
 Blender's tracking abilities have improved so much recently that it seems that it's standard functionality can be used to do most of the calibration and tracking functions required for a mocap session. This 'Triangulate' addon has been created to do the final piece of the puzzle. Before running the addon, it's necessary to have set up two or more movie clips with tracking data for the markers on a mocap actor. There must also be matching 3d cameras in a 3d scene which accurately match the location, rotation and lens/sensor data of the real cameras which produced the movieclip footage. 
