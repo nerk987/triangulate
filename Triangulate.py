@@ -19,8 +19,8 @@
 bl_info = {
     "name": "Triangulate",
     "author": "Ian Huish (nerk)",
-    "version": (0, 1, 0),
-    "blender": (2, 72, 0),
+    "version": (0, 1, 1),
+    "blender": (2, 79, 0),
     "location": "View3D > Object > Triangulate",
     "description": "Animates Empties based on camera triangulation",
     "warning": "",
