@@ -19,8 +19,8 @@
 bl_info = {
     "name": "Triangulate",
     "author": "Ian Huish (nerk)",
-    "version": (0, 1, 0),
-    "blender": (2, 72, 0),
+    "version": (1, 0, 0),
+    "blender": (2, 80, 0),
     "location": "View3D > Object > Triangulate",
     "description": "Animates Empties based on camera triangulation",
     "warning": "",
@@ -55,7 +55,7 @@ def GetRayFromTrack(track, clip, clipob, frame, scene):
     camera = D.objects[clip]
     frame = camera.data.view_frame(scene=scene)
     rayend = Vector((frame[2][0]+coord2D[0]*(frame[0][0]- frame[2][0]), frame[2][1]+coord2D[1]*(frame[0][1]- frame[2][1]), frame[0][2]))
-    rayend = camera.matrix_world.normalized()*rayend
+    rayend = camera.matrix_world.normalized()@rayend
     return [camera.location, rayend]
 
 def ReadTracks(scene, MaxError):
@@ -91,7 +91,7 @@ def ReadTracks(scene, MaxError):
 # for each frame, triangulate the tracks, and add keyframes to the empties
 #
     for cf in range(scene.frame_start, scene.frame_end+1):
-        print (cf)
+        # print (cf)
         for trackname, cliplist in tracks.items():
 #            print("Frame: ", cf, " Track: ", trackname)
             ray = []
@@ -109,7 +109,7 @@ def ReadTracks(scene, MaxError):
                 EmptyObj['Error'] = errorval
                 EmptyObj.keyframe_insert(data_path='["Error"]', frame=(cf))
                 if errorval < MaxError:
-                    print("Adding kf: ", trackname, cf)
+                    # print("Adding kf: ", trackname, cf)
                     EmptyLocation = 0.5*(result[0]+result[1])
                     EmptyObj.location = EmptyLocation
                     EmptyObj.keyframe_insert(data_path='location', frame=(cf))
@@ -117,10 +117,10 @@ def ReadTracks(scene, MaxError):
                     ErrorCount += 1
                     # print(TotalError)
                 else:
-                    print("Deleting kf: ", trackname, cf)
+                    # print("Deleting kf: ", trackname, cf)
                     EmptyObj.keyframe_delete(data_path='location', frame=(cf))
     Average = TotalError / ErrorCount
-    print("Average: ", Average)
+    # print("Average: ", Average)
     return Average
                     
             
@@ -131,8 +131,8 @@ class MESH_OT_triangulate(bpy.types.Operator):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'TOOLS'
     bl_options = {'REGISTER', 'UNDO'}
-    MaxError = FloatProperty(name="Max Error", description="Max Error", default=1.0, min=0, soft_max=100)
-    AvError = FloatProperty(name="Average Error", description="Average Error", default=0.0, min=0)
+    MaxError : FloatProperty(name="Max Error", description="Max Error", default=1.0, min=0, soft_max=100)
+    AvError : FloatProperty(name="Average Error", description="Average Error", default=0.0, min=0)
 
 
     def execute(self, context):
@@ -149,7 +149,8 @@ class VIEW_3D_PT_triangulate(bpy.types.Panel):
     bl_idname = "VIEW_3D_PT_triagulate"
     bl_label = "Triangulate"
     bl_space_type = 'VIEW_3D'
-    bl_region_type = 'TOOLS'
+    bl_region_type = 'UI'
+    bl_category = "Triangulate"
 
     def draw(self,context):
         layout = self.layout
@@ -157,15 +158,22 @@ class VIEW_3D_PT_triangulate(bpy.types.Panel):
         
 def menu_func_triangulate(self, context):
     self.layout.operator(MESH_OT_triangulate.bl_idname, text="Triangulate", icon='RNDCURVE')
-        
+
+classes = (
+    MESH_OT_triangulate,
+    VIEW_3D_PT_triangulate,
+)
+
+    
 def register():
-    bpy.utils.register_class(MESH_OT_triangulate)
-    bpy.utils.register_class(VIEW_3D_PT_triangulate)
+    from bpy.utils import register_class
+    for cls in classes:
+        register_class(cls)
     bpy.types.VIEW3D_MT_object.append(menu_func_triangulate)
 
 def unregister():
     bpy.types.VIEW3D_MT_paint_weight.remove(menu_func_triangulate)
-    bpy.utils.unregister_class(VIEW_3D_PT_triangulate)
-    bpy.utils.unregister_class(MESH_OT_triangulate)
-
+    from bpy.utils import unregister_class
+    for cls in classes:
+        unregister_class(cls)
 

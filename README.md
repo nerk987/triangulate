@@ -4,7 +4,7 @@ Files:
 triangulate.py - the addon
 
 
-triangulate.zip - contains two short video files and a blend file showing the naming schemes described below
+TriangulateTestBlend.zip - contains two short video files and a blend file showing the naming schemes described below
 
 
 ## Introduction
