@@ -1,10 +1,10 @@
 # Blender Triangulate Addon
 
+Updated for Blender 2.8
+
 Files:
-triangulate.py - the addon
-
-
-TriangulateTestBlend.zip - contains two short video files and a blend file showing the naming schemes described below
+[triangulate.py](https://github.com/nerk987/Triangulate/releases/download/v1.0.0/triangulate.py) - the addon
+[TriangulateTestBlend.zip](https://github.com/nerk987/Triangulate/releases/download/v1.0.0/TriangulateTestBlend.zip) - contains two short video files and a blend file showing the naming schemes described below
 
 
 ## Introduction
